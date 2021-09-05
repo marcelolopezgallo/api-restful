@@ -38,8 +38,8 @@ async function createProduct(req, res, next) {
 
 async function updateProduct(req, res, next) {
     try {
-        contenedor.update(parseInt(req.params.id), req.body)
-        res.json(`id: ${req.params.id} updated`)
+        await contenedor.update(parseInt(req.params.id), req.body)
+        res.json(req.body)
     } catch (error) {
         next(error)
     }
@@ -47,8 +47,8 @@ async function updateProduct(req, res, next) {
 
 async function deleteProduct(req, res, next) {
     try {
-        contenedor.deleteById(req.params.id)
-        res.json(`id: ${req.params.id} deleted`)
+        await contenedor.deleteById(req.params.id)
+        res.json(`id: ${req.params.id} deleted succesfully`)
     } catch (error) {
         next(error)
     }

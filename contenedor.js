@@ -25,7 +25,7 @@ class Contenedor {
         const contenido = await this.getAll()
 
         const index = contenido.findIndex(p => p.id === id)
-        if (index !== -1){
+        if (index !== -1) {
             contenido[index].title = product.title
             contenido[index].price = product.price
             contenido[index].thumbnail = product.thumbnail
@@ -40,14 +40,12 @@ class Contenedor {
         const contenido = await this.getAll()
 
         const filteredProduct = contenido.filter(producto => producto['id'] == id)
+
         if (filteredProduct.length !== 0) {
-            console.log(filteredProduct)
+            return filteredProduct[0]
         } else {
             throw Error('producto no encontrado')
         }
-        
-        return filteredProduct[0]
-
     }
 
     async getAll() {
@@ -61,8 +59,13 @@ class Contenedor {
 
     async deleteById(id) {
         const contenido = await this.getAll()
-
-        await fs.promises.writeFile(this.filename, JSON.stringify(contenido.filter(element => element.id != id))) //splice borra 1 elemento a partir de la posición ${id}
+        const filteredProduct = contenido.filter(producto => producto['id'] == id)
+        
+        if (filteredProduct.length !== 0) {
+            await fs.promises.writeFile(this.filename, JSON.stringify(contenido.filter(element => element.id != id)))
+        } else {
+            throw Error('producto no encontrado')
+        }
     }
 
     async deleteAll() {
